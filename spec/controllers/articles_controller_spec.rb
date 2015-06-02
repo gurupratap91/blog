@@ -11,27 +11,21 @@ RSpec.describe ArticlesController, type: :controller do
     end
   end
 
-  describe 'create' do
-    context "when new article is posted" do
-      subject {post :new}
-      it 'should perform the create action of articles' do
-        expect(subject).to have_http_status(:success)
-        #expect(subject).to render_template(:new)
-      end
+  #Functionality of create is to create an article using the given parameters
+  #and redirect to the show url of the article
+  context 'create' do
+    it "should create new article" do
+      expect(Article.count).to eq 0
+      post :create, :article => { :title => "Foo", :text => "Bar"}
+
+      expect(Article.count).to eq 1
+      expect(assigns(:article).title).to eq("Foo")
+      expect(assigns(:article).text).to eq("Bar")
     end
 
-    context "when initialized" do
-      subject(:article) {Article.new}
-      it 'is a new article' do
-        expect(article).to be_a_new(Article)
-      end
-    end
-
-    context " redirects to show" do
-      subject { post :create, :article => { :title => "Foo", :text => "Bar" } }
-      it "redirects to article_url(@article)" do
-        expect(subject).to redirect_to(article_url(assigns(:article)))
-      end
+    it "should redirect to show page" do
+     post :create, :article => { :title => "Foo", :text => "Bar"}
+     expect(assigns(:article)).to redirect_to(article_url(assigns(:article)))
     end
   end
 end
