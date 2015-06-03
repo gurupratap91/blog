@@ -2,7 +2,23 @@ require 'rails_helper'
 
 RSpec.describe ArticlesController, type: :controller do
 
-  describe 'new' do
+  context 'index' do
+    it 'should get ids of all articles' do
+      article1 = Article.create(:title => "Fooppp",:text => "Bar")
+      article = Article.create(:title => "Foo",:text => "Bar")
+      #articles = Article.all
+      #get :index, :articles => articles
+      #expect(assigns(:articles)).to eq(Article.all)
+      get :index
+      expect(assigns(:articles)).to eq(Article.all)
+    end
+
+    it 'should render the index page of articles' do
+      expect(get :index).to render_template(:index)
+    end
+  end
+
+  context 'new' do
     subject {get :new}
     it "should render the new article page" do
       #expect(get :new).to render_template(:new)
@@ -18,8 +34,8 @@ RSpec.describe ArticlesController, type: :controller do
       post :create, :article =>{:title => "Foo", :text => "Bar"}
       id = article1.id
       get :show, :id => id
-      require 'pry'
-      binding.pry
+      #require 'pry'
+      #binding.pry
       expect((assigns(:article)).id).to eq(id)
     end
 
