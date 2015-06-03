@@ -11,6 +11,27 @@ RSpec.describe ArticlesController, type: :controller do
     end
   end
 
+  context 'show' do
+    it 'should find the article with given id' do
+      post :create, :article =>{:title => "Foo", :text => "Bar"}
+      id = assigns(:article).id
+      get :show, :id => id
+      expect((assigns(:article)).id).to eq(id)
+    end
+
+    it 'should find the article with given id better test' do
+      article = Article.create(:title => "Foo",:text => "Bar")
+      get :show, :id => article.id
+      expect(assigns(:article).id).to eq(article.id)
+    end
+
+    it 'should render the show page of the article' do
+      article = Article.create(:title => "Foo",:text => "Bar")
+      get :show, :id => article.id
+      expect(assigns(:article)).to render_template(:show)
+    end
+  end
+
   #Functionality of create is to create an article using the given parameters
   #and redirect to the show url of the article
   context 'create' do
