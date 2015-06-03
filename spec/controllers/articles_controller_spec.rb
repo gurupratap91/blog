@@ -12,10 +12,14 @@ RSpec.describe ArticlesController, type: :controller do
   end
 
   context 'show' do
+    #useless test article should not be created in this way
     it 'should find the article with given id' do
+      article1 = Article.create(:title => "Fooppp",:text => "Bar")
       post :create, :article =>{:title => "Foo", :text => "Bar"}
-      id = assigns(:article).id
+      id = article1.id
       get :show, :id => id
+      require 'pry'
+      binding.pry
       expect((assigns(:article)).id).to eq(id)
     end
 
