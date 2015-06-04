@@ -5,7 +5,7 @@ RSpec.describe ArticlesController, type: :controller do
   context 'index' do
     it 'should get ids of all articles' do
       article1 = Article.create(:title => "Fooppp",:text => "Bar")
-      article = Article.create(:title => "Foo",:text => "Bar")
+      article = Article.create(:title => "Foosd",:text => "Bar")
       #articles = Article.all
       #get :index, :articles => articles
       #expect(assigns(:articles)).to eq(Article.all)
@@ -31,7 +31,7 @@ RSpec.describe ArticlesController, type: :controller do
     #useless test article should not be created in this way
     it 'should find the article with given id' do
       article1 = Article.create(:title => "Fooppp",:text => "Bar")
-      post :create, :article =>{:title => "Foo", :text => "Bar"}
+      post :create, :article =>{:title => "Foosd", :text => "Bar"}
       id = article1.id
       get :show, :id => id
       #require 'pry'
@@ -40,13 +40,13 @@ RSpec.describe ArticlesController, type: :controller do
     end
 
     it 'should find the article with given id better test' do
-      article = Article.create(:title => "Foo",:text => "Bar")
+      article = Article.create(:title => "Foosd",:text => "Bar")
       get :show, :id => article.id
       expect(assigns(:article).id).to eq(article.id)
     end
 
     it 'should render the show page of the article' do
-      article = Article.create(:title => "Foo",:text => "Bar")
+      article = Article.create(:title => "Foosd",:text => "Bar")
       get :show, :id => article.id
       expect(assigns(:article)).to render_template(:show)
     end
@@ -57,15 +57,15 @@ RSpec.describe ArticlesController, type: :controller do
   context 'create' do
     it "should create new article" do
       expect(Article.count).to eq 0
-      post :create, :article => { :title => "Foo", :text => "Bar"}
+      post :create, :article => { :title => "Foosd", :text => "Bar"}
 
       expect(Article.count).to eq 1
-      expect(assigns(:article).title).to eq("Foo")
+      expect(assigns(:article).title).to eq("Foosd")
       expect(assigns(:article).text).to eq("Bar")
     end
 
     it "should redirect to show page" do
-     post :create, :article => { :title => "Foo", :text => "Bar"}
+     post :create, :article => { :title => "Foosd", :text => "Bar"}
      expect(assigns(:article)).to redirect_to(article_url(assigns(:article)))
     end
   end
