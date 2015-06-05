@@ -69,4 +69,22 @@ RSpec.describe ArticlesController, type: :controller do
      expect(assigns(:article)).to redirect_to(article_url(assigns(:article)))
     end
   end
+
+  context 'edit' do
+    it 'should find the argument whose id is passed' do
+      article = Article.create(:title => 'FOOOO', :text => 'Bar')
+      get :edit, :id => article.id
+      expect(assigns(:article).id).to eq(article.id)
+    end
+  end
+
+  context 'update' do
+    it 'should find and update the article with given id' do
+      article = Article.create(:title => 'FOOOO', :text => 'Bar')
+      patch :update, :id => article.id, :article => {:title => "Foolish", :text => "Boy"}
+      expect(assigns(:article).id).to eq(article.id)
+      expect(assigns(:article).title).to eq("Foolish")
+      expect(assigns(:article).text).to eq("Boy")
+    end
+  end
 end
