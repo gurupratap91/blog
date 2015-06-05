@@ -87,4 +87,13 @@ RSpec.describe ArticlesController, type: :controller do
       expect(assigns(:article).text).to eq("Boy")
     end
   end
+
+  context 'destroy' do
+    it 'should find and destroy the given article' do
+      article = Article.create(:title => 'FOOOO', :text => 'Bar')
+      delete :destroy, :id => article.id
+      expect(assigns(:article).id).to eq(article.id)
+      expect(Article.count).to eq(0);
+    end
+  end
 end
